@@ -1,0 +1,36 @@
+lets(
+	_isbn13, prop("ISBN-13"),
+	_isbn9, split(_isbn13,""),
+	_isbn9, slice(_isbn9, 5, 14),
+
+	
+	_i, 0,
+	
+	_sum, toNumber(format(slice(_isbn9, _i, _i+1))) * (10-_i),
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 9,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 8,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 7,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 6,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 5,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 4,
+	_i, _i+1,	
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 3,
+	_i, _i+1,
+	_sum, _sum + toNumber(format(slice(_isbn9, _i, _i+1))) * 2,
+	_i, _i+1,
+	
+	_remainder, _sum % 11,
+	_checkDigit, 11-_remainder,
+	
+	_formattedisbn9, format(_isbn9),
+	_formattedisbn9, replaceAll(_formattedisbn9, ","),
+	
+	
+	ifs(_checkDigit == 11, _formattedisbn9 + "0", _checkDigit == 10, _formattedisbn9 + "X", _formattedisbn9 + _checkDigit)
+)
